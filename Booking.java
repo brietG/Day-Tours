@@ -1,15 +1,16 @@
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Booking {
     private int bookingID;
     private String customer;
     private String tour;
-    private Date date;
-    private String time; 
+    private LocalDate date;
+    private LocalTime time; 
     private int numSpots;
     private int price;
 
-    public Booking(int bookingID, String customer, String tour, Date date, String time, int numSpots, int price) {
+    public Booking(int bookingID, String customer, String tour, LocalDate date, LocalTime time, int numSpots, int price) {
         this.bookingID = bookingID;
         this.customer = customer;
         this.tour = tour;
@@ -44,19 +45,19 @@ public class Booking {
         this.tour = tour;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -77,7 +78,23 @@ public class Booking {
     }
 
     // Method - TODO - Setja inn kóða
-    public void change(String book) {
+    public void bookTour() {
        
     }
 }
+
+/* Hægt að sleppa getterum og setterum og setja þetta upp svona
+public class Booking {
+    private int bookingID;
+    private String customer;
+    private String tour;
+    private Date date;
+    private String time;
+    private int numSpots;
+    private int price;
+
+    public void bookTour() { 
+
+    }
+}
+*/
