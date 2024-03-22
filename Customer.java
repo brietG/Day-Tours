@@ -6,11 +6,9 @@ public class Customer {
     private int phone;
 
     // TODO gera gettera og settera
+    // Listi af bookings (þá getBookings)
 
     public void seeBooking(){
 
-    }
-    public void confirmBooking(bookingID){
-        
     }
 }

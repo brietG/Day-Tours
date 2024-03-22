@@ -4,11 +4,11 @@ import java.time.LocalTime;
 public class Booking {
     private int bookingID;
     private String customer;
-    private String tour;
     private LocalDate date;
     private LocalTime time; 
     private int numSpots;
     private int price;
+    private Tour tour;
 
     public Booking(int bookingID, String customer, String tour, LocalDate date, LocalTime time, int numSpots, int price) {
         this.bookingID = bookingID;
@@ -37,11 +37,11 @@ public class Booking {
         this.customer = customer;
     }
 
-    public String getTour() {
+    public Tour getTour() {
         return tour;
     }
 
-    public void setTour(String tour) {
+    public void setTour(Tour tour) {
         this.tour = tour;
     }
 
