@@ -4,18 +4,20 @@ import java.time.LocalTime;
 public class Booking {
     private int bookingID;
     private Customer customer;
-    private LocalDate date;
-    private LocalTime time; 
+    private int tourID;
+    private LocalDate bookingDate;
+    private LocalTime bookingTime; 
     private int numSpots;
     private int price;
-    private Tour tour;
+    // private boolean confirmed; Hvað með þetta? fyrir confirmBooking() og isConfirmed() Í bookingController
 
-    public Booking(int bookingID, Customer customer, Tour tour, LocalDate date, LocalTime time, int numSpots, int price) {
+    // Constuctor
+    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price) {
         this.bookingID = bookingID;
         this.customer = customer;
-        this.tour = tour;
-        this.date = date;
-        this.time = time;
+        this.tourID = tourID;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
         this.numSpots = numSpots;
         this.price = price;
     }
@@ -37,28 +39,28 @@ public class Booking {
         this.customer = customer;
     }
 
-    public Tour getTour() {
-        return tour;
+    public int getTourID() {
+        return tourID;
     }
 
-    public void setTour(Tour tour) {
-        this.tour = tour;
+    public void setTourID(int tourID) {
+        this.tourID = tourID;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getBookingDate() {
+        return bookingDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setBookingDate(LocalDate bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getBookingTime() {
+        return bookingTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setBookingTime(LocalTime bookingTime) {
+        this.bookingTime = bookingTime;
     }
 
     public int getNumSpots() {
@@ -82,19 +84,3 @@ public class Booking {
        
     }
 }
-
-/* Hægt að sleppa getterum og setterum og setja þetta upp svona
-public class Booking {
-    private int bookingID;
-    private String customer;
-    private String tour;
-    private Date date;
-    private String time;
-    private int numSpots;
-    private int price;
-
-    public void bookTour() { 
-
-    }
-}
-*/

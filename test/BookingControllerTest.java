@@ -1,13 +1,12 @@
 // package test; (veit ekki hvort við þurfum þetta. Vscode setti þetta inn)
 
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class BookingControllerTest {
     private BookingController bookingController;
@@ -16,81 +15,79 @@ public class BookingControllerTest {
 
     @Before
     public void setUp() {
-        // Fyrir Tour
-        // Skoða tour
-        String location = "Kringlan";
-        double duration = 1.5;
-        int pricePerPerson = 100;
-        String type = "Shopping";
-        Date dates = Date.valueOf(LocalDate.now());
-        String timeOfTour = "12:00";
-
         // Fyrir Booking
-        int bookingID = 1;
-        LocalDate date = LocalDate.of(2024, 1, 1);
-        LocalTime time = LocalTime.of(12, 0);
+        int bookingID = 321;
+        LocalDate bookingDate = LocalDate.of(2024, 1, 1);
+        LocalTime bookingTime = LocalTime.of(12, 0);
         int numSpots = 2;
         int price = 100;
-        Tour tour = new Tour(location, duration, pricePerPerson, type, dates, timeOfTour);
-        
+        int tourID = 123;
+
         // Fyrir Customer
-        int kennitala;
-        String name;
-        String email;
-        int phone;
+        int kennitala = 1123456789;
+        String name = "Jón Jónsson";
+        String email = "jonbesti@gmail.com";
+        int phone = 6961234;
 
         bookingController = new BookingController();
-        booking = new Booking(bookingID, customer, tour, date, time, numSpots, price);
+        booking = new Booking(bookingID, customer, tourID, bookingDate, bookingTime, numSpots, price);
         customer = new Customer(kennitala, name, email, phone);
     }
 
     @Test
     public void testChange() {
+        // TODO - skoða virknina á change fallinu
+        LocalDate originalDate = booking.getBookingDate();
         bookingController.change(booking);
 
-        // Gerum assert skipun hérna:
-        // assertTrue();
+        assertNotEquals(originalDate, booking.getBookingDate());
     }
 
     @Test
     public void testCancel() {
+        // Þurfum að búa til getBookings method
+        int initialNumBookings = bookingController.getBookings().length;
         bookingController.cancel(booking);
+        Booking[] updatedBookings = bookingController.getBookings();
 
-        // Assert skipun hérna
-        // assertTrue();
+        assertEquals(initialNumBookings - 1, updatedBookings.length);
     }
 
     @Test
     public void testSearch() {
-        int bookingID = 123;
+        int bookingID = 321;
 
         Booking[] bookings = bookingController.search(bookingID);
 
-        // Chekka á þessu
         assertNotNull(bookings);
     }
 
     @Test
     public void testCreateBooking() {
-        Booking[] bookings = bookingController.createBooking();
+        Booking newBooking = bookingController.createBooking();      
 
-        // chekka á þessu
-        assertNotNull(bookings);
+        assertNotNull(newBooking.getBookingID());
+        assertNotNull(newBooking.getCustomer());
+        assertNotNull(newBooking.getTourID());
+        assertNotNull(newBooking.getBookingDate());
+        assertNotNull(newBooking.getBookingTime());
+        assertNotNull(newBooking.getNumSpots());
+        assertNotNull(newBooking.getPrice());
     }
 
     @Test
     public void testAddBooking() {
+        int initialSize = bookingController.getBookings().length;
         bookingController.addBooking();
+        int newSize = bookingController.getBookings().length;
 
-        // Setjum inn assert skipun hér lika
-        // assertTrue(blabla);
+        assertEquals(initialSize + 1, newSize);
     }
 
     @Test
     public void testConfirmBooking() {
         bookingController.confirmBooking(booking);
 
-        // Assert skipun hér
-        // assertTrue();
+        assertTrue(booking.isConfirmed());
     }
 }

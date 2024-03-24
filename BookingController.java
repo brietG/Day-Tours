@@ -7,6 +7,8 @@ public class BookingController {
     public void cancel(Booking booking) { 
 
     }
+
+    // veit ekki hvort við þurfum þetta fall eða hvort það sé bara að flækja málin :,)
     public Booking[] search(int bookingID) { 
 
     }
@@ -21,5 +23,10 @@ public class BookingController {
     // færði úr Customer
     public void confirmBooking(Booking booking){
         
+    }
+
+    // Bætti við útaf junit test TODO - laga inní method
+    public boolean isConfirmed(Booking booking){
+        return true;
     }
 }
