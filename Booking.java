@@ -3,14 +3,14 @@ import java.time.LocalTime;
 
 public class Booking {
     private int bookingID;
-    private String customer;
+    private Customer customer;
     private LocalDate date;
     private LocalTime time; 
     private int numSpots;
     private int price;
     private Tour tour;
 
-    public Booking(int bookingID, String customer, String tour, LocalDate date, LocalTime time, int numSpots, int price) {
+    public Booking(int bookingID, Customer customer, Tour tour, LocalDate date, LocalTime time, int numSpots, int price) {
         this.bookingID = bookingID;
         this.customer = customer;
         this.tour = tour;
@@ -29,11 +29,11 @@ public class Booking {
         this.bookingID = bookingID;
     }
 
-    public String getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
