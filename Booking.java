@@ -9,6 +9,7 @@ public class Booking {
     private int numSpots;
     private int price;
     private Tour tour;
+    // private boolean confirmed; Hvað með þetta? fyrir confirmBooking() og isConfirmed() Í bookingController
 
     public Booking(int bookingID, Customer customer, Tour tour, LocalDate date, LocalTime time, int numSpots, int price) {
         this.bookingID = bookingID;
@@ -82,19 +83,3 @@ public class Booking {
        
     }
 }
-
-/* Hægt að sleppa getterum og setterum og setja þetta upp svona
-public class Booking {
-    private int bookingID;
-    private String customer;
-    private String tour;
-    private Date date;
-    private String time;
-    private int numSpots;
-    private int price;
-
-    public void bookTour() { 
-
-    }
-}
-*/

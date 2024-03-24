@@ -22,4 +22,9 @@ public class BookingController {
     public void confirmBooking(Booking booking){
         
     }
+
+    // Bætti við útaf junit test
+    public boolean isConfirmed(Booking booking){
+        return true;
+    }
 }

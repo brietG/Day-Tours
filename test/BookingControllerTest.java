@@ -32,7 +32,7 @@ public class BookingControllerTest {
         int numSpots = 2;
         int price = 100;
         Tour tour = new Tour(location, duration, pricePerPerson, type, dates, timeOfTour);
-        
+
         // Fyrir Customer
         int kennitala;
         String name;
@@ -46,18 +46,32 @@ public class BookingControllerTest {
 
     @Test
     public void testChange() {
+        // TODO - skoða virknina á change fallinu
+        LocalDate originalDate = booking.getDate();
         bookingController.change(booking);
 
-        // Gerum assert skipun hérna:
-        // assertTrue();
+        assertNotEquals(originalDate, booking.getDate());
+
     }
 
     @Test
     public void testCancel() {
+        // þurfum að búa til getBookings method
+        int initialNumBookings = bookingController.getBookings().length;
         bookingController.cancel(booking);
+        Booking[] updatedBookings = bookingController.getBookings();
 
-        // Assert skipun hérna
-        // assertTrue();
+        assertEquals(initialNumBookings - 1, updatedBookings.length);
+
+        // TODO - Skoða þetta
+        boolean isBookingCancelled = true;
+        for (Booking updatedBooking : updatedBookings) {
+            if (updatedBooking.equals(booking)) {
+                isBookingCancelled = false;
+                break;
+            }
+        }
+        assertTrue("The booking was not canceled successfully", isBookingCancelled);
     }
 
     @Test
@@ -80,17 +94,18 @@ public class BookingControllerTest {
 
     @Test
     public void testAddBooking() {
+        int initialSize = bookingController.getBookings().length;
         bookingController.addBooking();
+        int newSize = bookingController.getBookings().length;
 
-        // Setjum inn assert skipun hér lika
-        // assertTrue(blabla);
+        assertEquals(initialSize + 1, newSize);
     }
 
     @Test
     public void testConfirmBooking() {
         bookingController.confirmBooking(booking);
 
-        // Assert skipun hér
-        // assertTrue();
+        // TODO - Búa til isConfirmed() method --- BookingController
+        assertTrue(booking.isConfirmed());
     }
 }
