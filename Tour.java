@@ -1,31 +1,41 @@
 import java.sql.Date;
 
 public class Tour {
-    private String location;
-    private double duration;
-    private int pricePerPerson;
+    private int tourID;
     private String type;
-    private Date dates;
-    private String time;
+    private String location;
+    private int pricePerPerson;
+    // private double duration;
+    private Date tourDate;
+    private String tourTime;
+    private boolean spaceAvailable;
 
     // Constructor
-    public Tour(String location, double duration, int pricePerPerson, String type, Date dates, String time) {
+    public Tour(int tourID, String location, int pricePerPerson, String type, Date tourDate, String tourTime, boolean spaceAvailable) {
+        this.tourID = tourID;
         this.location = location;
-        this.duration = duration;
+        // this.duration = duration;
         this.pricePerPerson = pricePerPerson;
         this.type = type;
-        this.dates = dates;
-        this.time = time;
+        this.tourDate = tourDate;
+        this.tourTime = tourTime;
+        this.spaceAvailable = spaceAvailable;
     }
 
     // Getterar & Setterar
+    public int getTourID() {
+        return tourID;
+    }
+    
     public String getLocation() {
         return location;
     }
 
+    /* 
     public double getDuration() {
         return duration;
     }
+    */
 
     public int getPricePerPerson() {
         return pricePerPerson;
@@ -35,22 +45,30 @@ public class Tour {
         return type;
     }
 
-    public Date getDates() {
-        return dates;
+    public Date getTourDate() {
+        return tourDate;
     }
 
-    public String getTime() {
-        return time;
+    public String getTourTime() {
+        return tourTime;
+    }
+
+    public boolean getSpaceAvailable() {
+        return spaceAvailable;
+    }
+
+    public void setTourID(int tourID) {
+        this.tourID = tourID;
     }
 
     public void setLocation(String location) {
         this.location = location;
     }
-
+    /*
     public void setDuration(double duration) {
         this.duration = duration;
     }
-
+    */
     public void setPricePerPerson(int pricePerPerson) {
         this.pricePerPerson = pricePerPerson;
     }
@@ -59,12 +77,16 @@ public class Tour {
         this.type = type;
     }
 
-    public void setDates(Date dates) {
-        this.dates = dates;
+    public void setTourDate(Date tourDate) {
+        this.tourDate = tourDate;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTourTime(String tourTime) {
+        this.tourTime = tourTime;
+    }
+
+    public void setSpaceAvailable(boolean spaceAvailable) {
+        this.spaceAvailable = spaceAvailable;
     }
 
     // Method / Aðferð
