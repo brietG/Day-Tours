@@ -1,18 +1,15 @@
 package throunhu.is.hi;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TourController {
-    private static final String SEARCH_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ?";
-    private static final String SEARCH_BY_LOCATION_QUERY = "SELECT * FROM Tours WHERE location = ?";
-    private static final String SEARCH_BY_DATE_QUERY = "SELECT * FROM Tours WHERE tourDate = ?";
-    private static final String SELECT_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ?";
+    private static final String SEARCH_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ? AND availableSpace > 0";
+    private static final String SEARCH_BY_LOCATION_QUERY = "SELECT * FROM Tours WHERE location = ? AND availableSpace > 0";
+    private static final String SEARCH_BY_DATE_QUERY = "SELECT * FROM Tours WHERE tourDate = ? AND availableSpace > 0";
+    private static final String SELECT_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ? AND availableSpace > 0";
+    private static final String DECREMENT_AVAILABLE_SPACE_QUERY = "UPDATE Tours SET availableSpace = availableSpace - ? WHERE tourID = ?";
 
     public Tour[] searchTourByType(String type) {
         try (Connection conn = Database.getConnection();
@@ -80,5 +77,16 @@ public class TourController {
             tours.add(tour);
         }
         return tours.toArray(new Tour[0]);
+    }
+
+    public void decrementAvailableSpace(int tourID, int numSpotsBooked) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(DECREMENT_AVAILABLE_SPACE_QUERY)) {
+            stmt.setInt(1, numSpotsBooked);
+            stmt.setInt(2, tourID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
