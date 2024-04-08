@@ -9,6 +9,8 @@ public class Booking {
     private int numSpots;
     private int price;
 
+
+
     public Booking(int bookingID, String customer, String tour, Date date, String time, int numSpots, int price) {
         this.bookingID = bookingID;
         this.customer = customer;
