@@ -5,23 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingDatabase {
-     public List<Booking> select(String query) {
-        List<Booking> bookings = new ArrayList<>();
+
+    public void addBookingToDatabase(Booking booking) throws SQLException {
+        // This method would interact with your BookingDatabase class
+        String insertSQL = "INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                // Retrieve booking information from the ResultSet and create Booking objects
-                int bookingID = rs.getInt("bookingID");
-                // Retrieve other booking attributes similarly
-                Booking booking = new Booking(bookingID, /* Other booking attributes */);
-                bookings.add(booking);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            pstmt.setInt(1, booking.getCustomer().getKennitala());
+            pstmt.setInt(2, booking.getTourID());
+            pstmt.setDate(3, Date.valueOf(booking.getBookingDate()));
+            pstmt.setTime(4, Time.valueOf(booking.getBookingTime()));
+            pstmt.setInt(5, booking.getNumSpots());
+            pstmt.setInt(6, booking.getPrice());
+            pstmt.executeUpdate();
         }
-        return bookings;
-    }
     
     public void update(Booking booking) { 
 

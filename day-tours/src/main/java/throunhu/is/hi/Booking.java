@@ -13,7 +13,9 @@ public class Booking {
     private int numSpots;
     private int price;
 
-    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price) {
+    private BookingDatabase bookingDatabase;
+
+    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price, BookingDatabase bookingDatabase) {
         this.bookingID = bookingID;
         this.customer = customer;
         this.tourID = tourID;
@@ -21,6 +23,7 @@ public class Booking {
         this.bookingTime = bookingTime;
         this.numSpots = numSpots;
         this.price = price;
+        this.bookingDatabase = bookingDatabase;
     }
 
     public int getBookingID() {
@@ -79,33 +82,29 @@ public class Booking {
         this.price = price;
     }
 
+
+    private boolean isValidBooking() {
+        if(numSpots <= 0){
+            System.out.println("No spots booked");
+            return false;
+        }
+        // Dagsetning í fortíðinni valin ?
+        return true;
+    }
+
     public void bookTour() {
         // Perform validation checks
         if (!isValidBooking()) {
             System.out.println("Invalid booking.");
             return;
         }
-
-        // Perform database update
-        try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (?, ?, ?, ?, ?, ?)")) {
-            stmt.setInt(1, customer.getKennitala());
-            stmt.setInt(2, tourID);
-            stmt.setDate(3, Date.valueOf(bookingDate));
-            stmt.setTime(4, Time.valueOf(bookingTime));
-            stmt.setInt(5, numSpots);
-            stmt.setInt(6, price);
-            stmt.executeUpdate();
+        try {
+            bookingDatabase.addBookingToDatabase(this);
             System.out.println("Booking successful.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Failed to book the tour.");
+        } catch (Exception e) {
+            System.out.println("Booking failed: " + e.getMessage());
         }
     }
 
-    private boolean isValidBooking() {
-        // Implement your validation logic here (e.g., check availability)
-        // Return true if the booking is valid; false otherwise
-        return true; // Placeholder for demonstration
-    }
+
 }
