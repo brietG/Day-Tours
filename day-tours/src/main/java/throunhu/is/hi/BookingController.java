@@ -46,13 +46,13 @@ public class BookingController {
             return false;
         }
 
-        Tour tour = tourDatabase.getTourByDetails(String.valueOf(booking.getTourID()));
+        Tour tour = booking.getTourDatabase().getTourByDetails(String.valueOf(booking.getTourID()));
         if (tour == null) {
             System.out.println("Tour not found.");
             return false;
         }
 
-        if (!tour.getSpaceAvailable() || tour.getLimitSpots() < numSpots) {
+        if (!tour.getSpaceAvailable() || tour.getLimitSpots() < booking.getNumSpots()) {
             System.out.println("Not enough available spots for booking.");
             return false;
         }

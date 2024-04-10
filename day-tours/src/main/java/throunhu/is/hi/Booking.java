@@ -13,8 +13,9 @@ public class Booking {
     private int numSpots;
     private int price;
     private BookingDatabase bookingDatabase;
+    private TourDatabase tourDatabase;
 
-    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price, BookingDatabase bookingDatabase) {
+    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price, BookingDatabase bookingDatabase, TourDatabase tourDatabase) {
         this.bookingID = bookingID;
         this.customer = customer;
         this.tourID = tourID;
@@ -23,6 +24,7 @@ public class Booking {
         this.numSpots = numSpots;
         this.price = price;
         this.bookingDatabase = bookingDatabase;
+        this.tourDatabase = tourDatabase;
     }
 
     public int getBookingID() {
@@ -79,6 +81,14 @@ public class Booking {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void setTourDatabase(TourDatabase tourDatabase) {
+        this.tourDatabase = tourDatabase;
+    }
+
+   public TourDatabase getTourDatabase() {
+        return tourDatabase;
     }
 
 
