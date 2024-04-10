@@ -1,6 +1,6 @@
 package throunhu.is.hi;
-
 import throunhu.is.hi.Booking;
+
 
 public class BookingController {
     private Booking[] bookings;
@@ -37,4 +37,23 @@ public class BookingController {
     public boolean isConfirmed(Booking booking){
         return true;
     }
+
+    private boolean isValidBooking(Booking booking) {
+        if(booking.getNumSpots() <= 0){
+            System.out.println("No spots booked");
+            return false;
+        }
+        // Dagsetning í fortíðinni valin ?
+        return true;
+    }
+
+    public void processBooking(Booking booking) {
+        if (isValidBooking(booking)) {
+            booking.bookTour();
+        } else {
+            System.out.println("Invalid booking.");
+        }
+    }
+
 }
+

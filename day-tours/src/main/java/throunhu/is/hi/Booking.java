@@ -12,7 +12,6 @@ public class Booking {
     private LocalTime bookingTime;
     private int numSpots;
     private int price;
-
     private BookingDatabase bookingDatabase;
 
     public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price, BookingDatabase bookingDatabase) {
@@ -83,21 +82,7 @@ public class Booking {
     }
 
 
-    private boolean isValidBooking() {
-        if(numSpots <= 0){
-            System.out.println("No spots booked");
-            return false;
-        }
-        // Dagsetning í fortíðinni valin ?
-        return true;
-    }
-
     public void bookTour() {
-        // Perform validation checks
-        if (!isValidBooking()) {
-            System.out.println("Invalid booking.");
-            return;
-        }
         try {
             bookingDatabase.addBookingToDatabase(this);
             System.out.println("Booking successful.");
