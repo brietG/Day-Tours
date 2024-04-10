@@ -125,8 +125,13 @@ public class Tour {
         System.out.println("Date: " + tourDate);
         System.out.println("Time: " + tourTime);
         System.out.println("Limit spots: " + limitSpots);
-        System.out.println("Space available: " + spaceAvailable);
+        if (spaceAvailable) {
+            System.out.println("Space available" + limitSpots);
+        } else {
+            System.out.println("Fully booked");
+        }
     }
 
+    
 
 }

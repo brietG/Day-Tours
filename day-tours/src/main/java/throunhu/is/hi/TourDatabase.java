@@ -71,14 +71,15 @@ public class TourDatabase {
 
     public void addTour(Tour tour) {
         try (Connection conn = Database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tours (name, location, pricePerPerson, type, tourDate, tourTime, spaceAvailable) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tours (name, location, pricePerPerson, type, tourDate, tourTime, limitSpots, spaceAvailable) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             stmt.setString(1, tour.getName());
             stmt.setString(2, tour.getLocation());
             stmt.setInt(3, tour.getPricePerPerson());
             stmt.setString(4, tour.getType());
             stmt.setDate(5, tour.getTourDate());
             stmt.setString(6, tour.getTourTime());
-            stmt.setBoolean(7, tour.getSpaceAvailable());
+            stmt.setInt(7, tour.getLimitSpots());
+            stmt.setBoolean(8, tour.getSpaceAvailable());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
