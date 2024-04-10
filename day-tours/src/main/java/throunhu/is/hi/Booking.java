@@ -1,3 +1,6 @@
+package throunhu.is.hi;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -6,13 +9,10 @@ public class Booking {
     private Customer customer;
     private int tourID;
     private LocalDate bookingDate;
-    private LocalTime bookingTime; 
+    private LocalTime bookingTime;
     private int numSpots;
     private int price;
-    // private boolean confirmed; Hvað með þetta? fyrir confirmBooking() og isConfirmed() Í bookingController
 
-
-    // Constuctor
     public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price) {
         this.bookingID = bookingID;
         this.customer = customer;
@@ -23,7 +23,6 @@ public class Booking {
         this.price = price;
     }
 
-    // Getterar og Setterar
     public int getBookingID() {
         return bookingID;
     }
@@ -80,8 +79,33 @@ public class Booking {
         this.price = price;
     }
 
-    // Method - TODO - Setja inn kóða
     public void bookTour() {
-       
+        // Perform validation checks
+        if (!isValidBooking()) {
+            System.out.println("Invalid booking.");
+            return;
+        }
+
+        // Perform database update
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (?, ?, ?, ?, ?, ?)")) {
+            stmt.setInt(1, customer.getKennitala());
+            stmt.setInt(2, tourID);
+            stmt.setDate(3, Date.valueOf(bookingDate));
+            stmt.setTime(4, Time.valueOf(bookingTime));
+            stmt.setInt(5, numSpots);
+            stmt.setInt(6, price);
+            stmt.executeUpdate();
+            System.out.println("Booking successful.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to book the tour.");
+        }
+    }
+
+    private boolean isValidBooking() {
+        // Implement your validation logic here (e.g., check availability)
+        // Return true if the booking is valid; false otherwise
+        return true; // Placeholder for demonstration
     }
 }
