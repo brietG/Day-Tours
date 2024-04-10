@@ -3,6 +3,8 @@ import throunhu.is.hi.Booking;
 
 
 public class BookingController {
+    
+
     private Booking[] bookings;
 
     public void change(Booking booking) { 
@@ -43,8 +45,21 @@ public class BookingController {
             System.out.println("No spots booked");
             return false;
         }
-        // Dagsetning í fortíðinni valin ?
+
+        Tour tour = tourDatabase.getTourByDetails(String.valueOf(booking.getTourID()));
+        if (tour == null) {
+            System.out.println("Tour not found.");
+            return false;
+        }
+
+        if (!tour.getSpaceAvailable() || tour.getLimitSpots() < numSpots) {
+            System.out.println("Not enough available spots for booking.");
+            return false;
+        }
+
         return true;
+        // Dagsetning í fortíðinni valin ?
+        
     }
 
     public void processBooking(Booking booking) {
