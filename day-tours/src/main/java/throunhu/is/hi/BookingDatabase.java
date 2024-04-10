@@ -7,7 +7,6 @@ import java.util.List;
 public class BookingDatabase {
 
     public void addBookingToDatabase(Booking booking) throws SQLException {
-        // This method would interact with your BookingDatabase class
         String insertSQL = "INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
@@ -18,12 +17,35 @@ public class BookingDatabase {
             pstmt.setInt(5, booking.getNumSpots());
             pstmt.setInt(6, booking.getPrice());
             pstmt.executeUpdate();
-        }
-    
-    public void update(Booking booking) { 
 
+            System.out.println("Booking successful");
+        } catch (SQLException e) {
+            System.out.println("Failed to add booking: " + e.getMessage());
+            throw e; // Rethrow to allow caller to handle
+        }
     }
-    public void remove(Booking booking) { 
-        
+    public void removeBooking(int bookingID) throws SQLException {
+        String removeSQL = "DELETE FROM Bookings WHERE bookingID = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(removeSQL)) {
+            pstmt.setInt(1, bookingID);
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows == 1) {
+                System.out.println("Booking successfully cancelled.");
+            } else if (affectedRows == 0) {
+                System.out.println("No booking found with ID: " + bookingID);
+            } else {
+                System.out.println("Only one booking can be cancelled at a time " + affectedRows);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error removing booking: " + e.getMessage());
+        }
+    }
+
+
+
+    public void update (Booking booking){
+
     }
 }
