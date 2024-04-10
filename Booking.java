@@ -1,22 +1,24 @@
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Booking {
     private int bookingID;
-    private String customer;
-    private String tour;
-    private Date date;
-    private String time; 
+    private Customer customer;
+    private int tourID;
+    private LocalDate bookingDate;
+    private LocalTime bookingTime; 
     private int numSpots;
     private int price;
+    // private boolean confirmed; Hvað með þetta? fyrir confirmBooking() og isConfirmed() Í bookingController
 
 
-
-    public Booking(int bookingID, String customer, String tour, Date date, String time, int numSpots, int price) {
+    // Constuctor
+    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price) {
         this.bookingID = bookingID;
         this.customer = customer;
-        this.tour = tour;
-        this.date = date;
-        this.time = time;
+        this.tourID = tourID;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
         this.numSpots = numSpots;
         this.price = price;
     }
@@ -30,36 +32,36 @@ public class Booking {
         this.bookingID = bookingID;
     }
 
-    public String getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    public String getTour() {
-        return tour;
+    public int getTourID() {
+        return tourID;
     }
 
-    public void setTour(String tour) {
-        this.tour = tour;
+    public void setTourID(int tourID) {
+        this.tourID = tourID;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getBookingDate() {
+        return bookingDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBookingDate(LocalDate bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
-    public String getTime() {
-        return time;
+    public LocalTime getBookingTime() {
+        return bookingTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setBookingTime(LocalTime bookingTime) {
+        this.bookingTime = bookingTime;
     }
 
     public int getNumSpots() {
@@ -79,7 +81,7 @@ public class Booking {
     }
 
     // Method - TODO - Setja inn kóða
-    public void change(String book) {
+    public void bookTour() {
        
     }
 }
