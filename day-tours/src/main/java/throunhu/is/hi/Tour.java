@@ -10,12 +10,12 @@ public class Tour {
     private int pricePerPerson;
     // private double duration;
     private Date tourDate;
-    private String tourTime;
+    private Time tourTime;
     private int limitSpots;
     private boolean spaceAvailable;
 
     // Constructor
-    public Tour(int tourID, String name, String location, int pricePerPerson, String type, Date tourDate, String tourTime, int limitSpots, boolean spaceAvailable) {
+    public Tour(int tourID, String name, String location, int pricePerPerson, String type, Date tourDate, Time tourTime, int limitSpots, boolean spaceAvailable) {
         this.tourID = tourID;
         this.name = name;
         this.location = location;
@@ -55,7 +55,7 @@ public class Tour {
         return tourDate;
     }
 
-    public String getTourTime() {
+    public Time getTourTime() {
         return tourTime;
     }
 
@@ -89,7 +89,7 @@ public class Tour {
         this.tourDate = tourDate;
     }
 
-    public void setTourTime(String tourTime) {
+    public void setTourTime(Time tourTime) {
         this.tourTime = tourTime;
     }
 
