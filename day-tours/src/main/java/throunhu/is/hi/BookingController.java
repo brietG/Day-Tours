@@ -1,5 +1,4 @@
 package throunhu.is.hi;
-import throunhu.is.hi.Booking;
 
 
 public class BookingController {

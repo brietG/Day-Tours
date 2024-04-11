@@ -4,10 +4,36 @@ import java.sql.*;
 
 public class Database {
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc://localhost/DayTours";
-    static final String USER = "hopur4";
-    static final String PASS = "hopur4";
+    private Connection connectionToDb() {
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:DayTours.db");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return conn;
+
+    }
+
+    private void closeConnection(Connection conn) {
+        try {
+            if(conn != null) {
+                conn.close();
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+
+
+
+
+
+    /* 
+    static final String JDBC_DRIVER = "org.sqlite.JDBC";
+    static final String DB_URL = "jdbc:sqlite:resources/DayTours.db";
 
     public static void main(String[] args) {
         Connection conn = null;
@@ -15,7 +41,7 @@ public class Database {
         try {
             Class.forName(JDBC_DRIVER);
             System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn = DriverManager.getConnection(DB_URL);
             System.out.println("Creating statement...");
             
             /* 
@@ -38,7 +64,7 @@ public class Database {
             conn.close();
         } catch (SQLException se) {
             se.printStackTrace();
-            */
+            
 
             conn.close();
         } catch (SQLException se) {
@@ -63,7 +89,10 @@ public class Database {
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, USER, PASS);
+        return DriverManager.getConnection(conn);
     }
 }
+*/
 
+
+}

@@ -1,14 +1,8 @@
 package throunhu.is.hi;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.*;
 import java.util.List;
 import java.util.Scanner;
-
-import throunhu.is.hi.TourController;
-import throunhu.is.hi.BookingController;
-import throunhu.is.hi.Tour;
 
 
 public class Main {
@@ -23,18 +17,19 @@ public class Main {
         if (input.equalsIgnoreCase("search")) {
             System.out.println("Enter your search query:");
             String query = scanner.nextLine();
-            Tour[] tours = tourController.searchTours(query);
+            List<Tour> tours = tourController.searchTour(query);
             for (Tour tour : tours) {
                 tour.getInfo();
             }
         } else if (input.equalsIgnoreCase("all")) {
-            List<Tour> tours = tourController.getAllTours();
+            List <Tour> tours = tourController.getAllTours();
             for (Tour tour : tours) {
                 tour.getInfo();
             }
         } else {
             System.out.println("Invalid input. Please enter 'search' or 'all'.");
         }
+        scanner.close();
 
 
 

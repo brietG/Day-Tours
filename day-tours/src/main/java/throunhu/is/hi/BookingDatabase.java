@@ -5,39 +5,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingDatabase {
+    private Connection connectionToDb() {
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:DayTours.db");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return conn;
+    }
 
-    public void addBookingToDatabase(Booking booking) throws SQLException {
-        String insertSQL = "INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = Database.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
-            pstmt.setInt(1, booking.getCustomer().getKennitala());
-            pstmt.setInt(2, booking.getTourID());
-            pstmt.setDate(3, booking.getBookingDate());
-            pstmt.setTime(4, booking.getBookingTime());
-            pstmt.setInt(5, booking.getNumSpots());
-            pstmt.setInt(6, booking.getPrice());
-            pstmt.executeUpdate();
-
-            System.out.println("Booking successful");
-        } catch (SQLException e) {
-            System.out.println("Failed to add booking: " + e.getMessage());
-            throw e; // Rethrow to allow caller to handle
+    private void closeConnection(Connection conn) {
+        try {
+            if(conn != null) {
+                conn.close();
+            }
+        } catch (Exception e) {
+            System.err.println(e);
         }
     }
-    public void removeBooking(int bookingID) throws SQLException {
-        String removeSQL = "DELETE FROM Bookings WHERE bookingID = ?";
-        try (Connection conn = Database.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(removeSQL)) {
-            pstmt.setInt(1, bookingID);
-            int affectedRows = pstmt.executeUpdate();
 
-            if (affectedRows == 1) {
-                System.out.println("Booking successfully cancelled.");
-            } else if (affectedRows == 0) {
-                System.out.println("No booking found with ID: " + bookingID);
-            } else {
-                System.out.println("Only one booking can be cancelled at a time " + affectedRows);
+    public List<Booking> getBooking(int bookingID) {
+        Connection conn = connectionToDb();
+        ArrayList<Booking> bookings = new ArrayList<>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Bookings WHERE bookingID = " + bookingID);
+            while (rs.next()) {
+                int customerID = rs.getInt("customerID");
+                int tourID = rs.getInt("tourID");
+                Date bookingDate = rs.getDate("bookingDate");
+                Time bookingTime = rs.getTime("bookingTime");
+                int numSpots = rs.getInt("numSpots");
+                int price = rs.getInt("price");
+                Booking booking = new Booking(customerID, null, tourID, bookingDate, bookingTime, numSpots, price, null, null);
+                bookings.add(booking);
             }
+            rs.close();
+            stmt.close();
+            closeConnection(conn);
+            return bookings;
+        } catch (SQLException e) {
+            System.out.println("Error getting booking: " + e.getMessage());
+            return null;
+        }
+
+    }
+
+
+    public void addBookingToDatabase(Booking booking) throws SQLException {
+        Connection conn = connectionToDb();
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (" + booking.getCustomer() + ", " + booking.getTourID() + ", '" + booking.getBookingDate() + "', '" + booking.getBookingTime() + "', " + booking.getNumSpots() + ", " + booking.getPrice() + ")");
+            stmt.close();
+            closeConnection(conn);
+        } catch (SQLException e) {
+            System.out.println("Error adding booking: " + e.getMessage());
+        }
+    
+    }
+
+
+    public void removeBooking(int bookingID) {
+        Connection conn = connectionToDb();
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM Bookings WHERE bookingID = " + bookingID);
+            stmt.close();
+            closeConnection(conn);
         } catch (SQLException e) {
             System.out.println("Error removing booking: " + e.getMessage());
         }

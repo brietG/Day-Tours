@@ -93,8 +93,14 @@ public class Booking {
 
     public void bookTour() {
         try {
-            bookingDatabase.addBookingToDatabase(this);
-            System.out.println("Booking successful.");
+            if(bookingDatabase != null) {
+                bookingDatabase.addBookingToDatabase(this);
+                decrementAvailableSpots();
+                System.out.println("Booking successful.");
+            }else {
+                System.out.println("Booking failed.");
+            }
+            
         } catch (Exception e) {
             System.out.println("Booking failed: " + e.getMessage());
         }
@@ -102,7 +108,6 @@ public class Booking {
     //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
     //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
     public void decrementAvailableSpots() {
-        TourDatabase tourDatabase = this.getTourDatabase();
         if (tourDatabase != null) {
             tourDatabase.decrementAvailableSpace(this.getTourID(), this.getNumSpots());
         }
