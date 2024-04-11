@@ -87,7 +87,7 @@ public class Booking {
         this.tourDatabase = tourDatabase;
     }
 
-   public TourDatabase getTourDatabase() {
+    public TourDatabase getTourDatabase() {
         return tourDatabase;
     }
 
@@ -98,6 +98,14 @@ public class Booking {
             System.out.println("Booking successful.");
         } catch (Exception e) {
             System.out.println("Booking failed: " + e.getMessage());
+        }
+    }
+    //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
+    //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
+    public void decrementAvailableSpots() {
+        TourDatabase tourDatabase = this.getTourDatabase();
+        if (tourDatabase != null) {
+            tourDatabase.decrementAvailableSpace(this.getTourID(), this.getNumSpots());
         }
     }
 

@@ -3,6 +3,7 @@ package throunhu.is.hi;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import throunhu.is.hi.Tour;
 
 public class TourController {
     private TourDatabase tourDatabase = new TourDatabase();

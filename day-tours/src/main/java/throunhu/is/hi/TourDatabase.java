@@ -65,9 +65,11 @@ public class TourDatabase {
             stmt.setInt(2, tourID);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
+
     }
+    
 
     public void addTour(Tour tour) {
         try (Connection conn = Database.getConnection();

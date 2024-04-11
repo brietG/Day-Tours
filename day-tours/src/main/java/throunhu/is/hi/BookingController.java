@@ -24,9 +24,15 @@ public class BookingController {
     public void addBooking() { 
 
     }
-    // færði úr Customer
-    public void confirmBooking(Booking booking){
-        
+    //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
+    //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
+    public void confirmBooking(Booking booking) {
+        if (isValidBooking(booking)) {
+            booking.decrementAvailableSpots(); // Decrement available spots
+            booking.bookTour();
+        } else {
+            System.out.println("Invalid booking.");
+        }
     }
 
     // Bætti við útaf junit test TODO - laga inní method
@@ -63,6 +69,8 @@ public class BookingController {
             System.out.println("Invalid booking.");
         }
     }
+
+
 
 }
 

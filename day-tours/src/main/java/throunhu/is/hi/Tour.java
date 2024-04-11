@@ -1,6 +1,6 @@
 package throunhu.is.hi;
 
-import java.sql.Date;
+import java.sql.*;
 
 public class Tour {
     private int tourID;
