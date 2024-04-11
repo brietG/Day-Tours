@@ -11,7 +11,7 @@ public class Main {
         BookingDatabase bookingDatabase = new BookingDatabase();
         Customer customer = new Customer(1020202, "John Doe","joi@dd", 33333); // Assuming a Customer constructor
 
-        Booking booking = new Booking(0, customer, 101, LocalDate.now(), LocalTime.now(), 2, 200, bookingDatabase);
+        Booking booking = new Booking(0, customer, , LocalDate.now(), LocalTime.now(), 2, 200, bookingDatabase);
 
         try {
             // Adding a booking

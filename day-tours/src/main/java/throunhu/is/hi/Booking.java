@@ -1,21 +1,20 @@
 package throunhu.is.hi;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 
 public class Booking {
     private int bookingID;
     private Customer customer;
     private int tourID;
-    private LocalDate bookingDate;
-    private LocalTime bookingTime;
+    private Date bookingDate;
+    private Time bookingTime;
     private int numSpots;
     private int price;
     private BookingDatabase bookingDatabase;
     private TourDatabase tourDatabase;
 
-    public Booking(int bookingID, Customer customer, int tourID, LocalDate bookingDate, LocalTime bookingTime, int numSpots, int price, BookingDatabase bookingDatabase, TourDatabase tourDatabase) {
+    public Booking(int bookingID, Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots, int price, BookingDatabase bookingDatabase, TourDatabase tourDatabase) {
         this.bookingID = bookingID;
         this.customer = customer;
         this.tourID = tourID;
@@ -51,19 +50,19 @@ public class Booking {
         this.tourID = tourID;
     }
 
-    public LocalDate getBookingDate() {
+    public Date getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(LocalDate bookingDate) {
+    public void setBookingDate(Date bookingDate) {
         this.bookingDate = bookingDate;
     }
 
-    public LocalTime getBookingTime() {
+    public Time getBookingTime() {
         return bookingTime;
     }
 
-    public void setBookingTime(LocalTime bookingTime) {
+    public void setBookingTime(Time bookingTime) {
         this.bookingTime = bookingTime;
     }
 
