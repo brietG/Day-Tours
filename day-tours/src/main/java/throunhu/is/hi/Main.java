@@ -7,7 +7,6 @@ public class Main {
     public static void main(String[] args) {
         TourController tourController = new TourController();
         BookingController bookingController = new BookingController();
-        TourDatabase tourDatabase = new TourDatabase();
         
         
         List<Tour> allTours = tourController.getAllTours();
