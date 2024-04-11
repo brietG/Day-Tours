@@ -2,7 +2,6 @@ package throunhu.is.hi;
 
 import java.sql.*;
 import java.util.List;
-import throunhu.is.hi.*;
 
 public class Main {
     public static void main(String[] args) {
