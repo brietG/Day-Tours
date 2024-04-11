@@ -14,19 +14,13 @@ public class BookingController {
 
     }
 
-    // veit ekki hvort við þurfum þetta fall eða hvort það sé bara að flækja málin :,)
-    public Booking[] search(int bookingID) { 
-
-        return null;
-
-    }
-
     // tekur inn allar upplýsingar sem þarf til að búa til booking
     public Booking[] createBooking() { 
 
         return null;
 
     }
+    
     public void addBooking() { 
 
     }
