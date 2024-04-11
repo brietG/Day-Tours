@@ -49,7 +49,7 @@ public class TourDatabase {
             String location = rs.getString("location");
             int pricePerPerson = rs.getInt("pricePerPerson");
             Date tourDate = rs.getDate("tourDate");
-            String tourTime = rs.getString("tourTime");
+            Time tourTime = rs.getTime("tourTime");
             int limitSpots = rs.getInt("limitSpots");
             boolean spaceAvailable = rs.getBoolean("spaceAvailable");
             Tour tour = new Tour(tourID, name, location, pricePerPerson, type, tourDate, tourTime, limitSpots, spaceAvailable);
@@ -77,7 +77,7 @@ public class TourDatabase {
             stmt.setInt(3, tour.getPricePerPerson());
             stmt.setString(4, tour.getType());
             stmt.setDate(5, tour.getTourDate());
-            stmt.setString(6, tour.getTourTime());
+            stmt.setTime(6, tour.getTourTime());
             stmt.setInt(7, tour.getLimitSpots());
             stmt.setBoolean(8, tour.getSpaceAvailable());
             stmt.executeUpdate();
@@ -94,7 +94,7 @@ public class TourDatabase {
         String location = rs.getString("location");
         int pricePerPerson = rs.getInt("pricePerPerson");
         Date tourDate = rs.getDate("tourDate");
-        String tourTime = rs.getString("tourTime");
+        Time tourTime = rs.getTime("tourTime");
         int limitSpots = rs.getInt("limitSpots");
         boolean spaceAvailable = rs.getBoolean("spaceAvailable");
         return new Tour(tourID, name, location, pricePerPerson, type, tourDate, tourTime, limitSpots, spaceAvailable);

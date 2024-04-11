@@ -10,8 +10,14 @@ public class BookingController {
     public void change(Booking booking) { 
 
     }
-    public void cancel(Booking booking) { 
 
+    //cancel booking veit ekki hvort er rétt á eftir að testa
+    public void cancel(Booking booking) { 
+        try {
+            booking.cancelBooking();
+        } catch (Exception e) {
+            System.out.println("Error cancelling booking: " + e.getMessage());
+        }
     }
 
     // veit ekki hvort við þurfum þetta fall eða hvort það sé bara að flækja málin :,)
