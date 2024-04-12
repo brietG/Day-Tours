@@ -3,7 +3,13 @@ package throunhu.is.hi;
 import throunhu.is.hi.Booking;
 
 public class BookingController {
-    private Booking[] bookings;
+    // private Booking[] bookings;
+
+    private List<Booking> bookings;
+
+    public bookingController(){
+        this.bookings = new ArrayList<>();  
+    }
 
     public void change(Booking booking) { 
 
@@ -12,16 +18,23 @@ public class BookingController {
 
     }
 
-    // tekur inn allar upplýsingar sem þarf til að búa til booking
+    // TODO -tekur inn allar upplýsingar sem þarf til að búa til booking
     public Booking[] createBooking() { 
 
         return null;
-
     }
-    
+
     public void addBooking() { 
 
     }
+
+    // Bætti við þessum getter - gætum alveg sleppt honum:
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    // TODO -veit ekki hvort við þurfum þessar aðferðir.
+
     // færði úr Customer
     public void confirmBooking(Booking booking){
         
