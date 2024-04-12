@@ -1,5 +1,4 @@
 package throunhu.is.hi;
-import throunhu.is.hi.Booking;
 
 import java.sql.Connection;
 import java.sql.Date;
