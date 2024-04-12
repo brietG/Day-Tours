@@ -10,8 +10,7 @@ public class Booking {
     private static final AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
     private int bookingID;
     private Customer customer;
-    private Tour tour;
-    //private int tourID;
+    private int tourID;
     private Date bookingDate;
     private Time bookingTime;
     private int numSpots;
@@ -19,17 +18,16 @@ public class Booking {
     private BookingDatabase bookingDatabase;
     private TourDatabase tourDatabase;
     private TourController tourController;
-
     private Database db;
 
-    public Booking(Customer customer, Tour tour, Date bookingDate, Time bookingTime, int numSpots) {
+    public Booking(Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots,int price) {
         this.bookingID = ID_GENERATOR.getAndIncrement();
         this.customer = customer;
-        //this.tourID = tourID;
+        this.tourID = tourID;
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
         this.numSpots = numSpots;
-        this.tour = tour;
+        this.price = price;
     }
 
     public int getBookingID() {
@@ -48,13 +46,13 @@ public class Booking {
         this.customer = customer;
     }
 
-   /*public int getTourID() {
+   public int getTourID() {
         return tourID;
     }
 
     public void setTourID(int tourID) {
         this.tourID = tourID;
-    }*/
+    }
 
     public Date getBookingDate() {
         return bookingDate;
@@ -96,9 +94,6 @@ public class Booking {
         return tourDatabase;
     }
 
-   public Tour getTour(){
-        return tour;
-   }
     //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
     //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
 

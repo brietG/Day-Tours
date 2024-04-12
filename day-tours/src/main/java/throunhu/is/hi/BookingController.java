@@ -15,18 +15,11 @@ public class BookingController {
         this.tourDatabase = tourDatabase;
     }
 
-    public void charge(Booking booking) {
-        booking.setPrice(booking.getNumSpots()* booking.getTour().getPricePerPerson());
-    }
-
-    public void cancel(Booking booking) {
-
-    }
 
     // tekur inn allar upplýsingar sem þarf til að búa til booking
-    public Booking createBooking(Customer customer, Tour tour, Date bookingDate, Time bookingTime, int numSpots) {
-        Booking booking = new Booking(customer,tour,bookingDate,bookingTime,numSpots);
-        charge(booking);
+    public Booking createBooking(Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots) {
+        int price = tourDatabase.getTourById(tourID).getPricePerPerson()*numSpots;
+        Booking booking = new Booking(customer,tourID,bookingDate,bookingTime,numSpots, price);
         return booking;
     }
 
@@ -60,7 +53,7 @@ public class BookingController {
             return false;
         }
 
-        Tour tour = booking.getTourDatabase().getTourByDetails(String.valueOf(booking.getTour().getTourID()));
+        Tour tour = booking.getTourDatabase().getTourById(booking.getTourID());
         if (tour == null) {
             System.out.println("Tour not found.");
             return false;
@@ -73,8 +66,11 @@ public class BookingController {
 
         return true;
         // Dagsetning í fortíðinni valin ?
-        
+
     }
+
+
+
 
 
 }

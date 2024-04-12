@@ -12,8 +12,9 @@ public class TourDatabase {
     public TourDatabase() {
         db = new Database(); // Initialize the Database instance
     }
+
     public Tour[] searchTours(String query) {
-        String SEARCH_QUERY = "SELECT * FROM tours WHERE type LIKE ? OR location LIKE ? OR DATE_FORMAT(date, '%Y-%m-%d') LIKE ?";
+        String SEARCH_QUERY = "SELECT * FROM Tours WHERE type LIKE ? OR location LIKE ? OR strftime('%Y-%m-%d', tourDate) LIKE ?";
     
         try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement(SEARCH_QUERY)) {

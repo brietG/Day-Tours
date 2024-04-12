@@ -13,7 +13,7 @@ public class BookingDatabase {
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             pstmt.setInt(1, booking.getCustomer().getKennitala());
-            pstmt.setInt(2, booking.getTour().getTourID());
+            pstmt.setInt(2, booking.getTourID());
             pstmt.setDate(3, booking.getBookingDate());
             pstmt.setTime(4, booking.getBookingTime());
             pstmt.setInt(5, booking.getNumSpots());
