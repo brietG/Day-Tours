@@ -20,43 +20,39 @@ public class Main {
         BookingController bookingController = new BookingController(bookingDatabase,tourDatabase);
 
         // Scanner for input
-        Scanner scanner = new Scanner(System.in);
+        
 
         // Sample customer data
         Customer customer = new Customer(2020202, "Jóna", "email@ja.is", 121212);
 
         // Main interaction loop
         System.out.println("Welcome! Do you want to 'search' a trip or get 'all' trips?");
-        while (true) {
-            String input = scanner.nextLine();
-            if (input.equalsIgnoreCase("search")) {
-                System.out.println("Enter your search query:");
-                String query = scanner.nextLine();
-                Tour[] tours = tourController.searchTours(query);
-                if (tours.length > 0) {
-                    for (Tour tour : tours) {
-                        tour.getInfo();
-                    }
-                } else {
-                    System.out.println("No tours found with the given query.");
-                }
-                break; // Exit after processing
-            } else if (input.equalsIgnoreCase("all")) {
-                List<Tour> tours = tourController.seeAllTours();
-                if (tours.isEmpty()) {
-                    System.out.println("No tours available.");
-                } else {
-                    for (Tour tour : tours) {
-                        tour.getInfo();
-                    }
-                }
-                break; // Exit after processing
-            } else {
-                System.out.println("Invalid input. Please enter 'search' or 'all'.");
+    Scanner scanner = new Scanner(System.in);
+    String input = scanner.nextLine();
+    if (input.equalsIgnoreCase("search")) {
+        System.out.println("Enter your search query:");
+        String query = scanner.nextLine();
+        Tour[] tours = tourController.searchTours(query);
+        if (tours != null && tours.length > 0) {
+            for (Tour tour : tours) {
+                tour.getInfo();
             }
+        } else {
+            System.out.println("No tours found with the given query.");
         }
-        scanner.close();
+    } else if (input.equalsIgnoreCase("all")) {
+        List<Tour> tours = tourController.seeAllTours();
+        if (tours != null && !tours.isEmpty()) {
+            for (Tour tour : tours) {
+                tour.getInfo();
+            }
+        } else {
+            System.out.println("No tours available.");
+        }
+    } else {
+        System.out.println("Invalid input. Please enter 'search' or 'all'.");
+    }
+    scanner.close();
+}
 
     }
-
-}
