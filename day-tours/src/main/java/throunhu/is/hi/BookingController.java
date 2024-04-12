@@ -10,7 +10,6 @@ public class BookingController {
     private BookingDatabase bookingDatabase;
     private TourDatabase tourDatabase;
     // private Booking[] bookings;
-
     private List<Booking> bookings;
 
     public BookingController(BookingDatabase bookingDatabase, TourDatabase tourDatabase) {
@@ -24,15 +23,17 @@ public class BookingController {
     public Booking createBooking(Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots) {
         int price = tourDatabase.getTourById(tourID).getPricePerPerson() * numSpots;
         Booking booking = new Booking(customer, tourID, bookingDate, bookingTime, numSpots, price);
+        return booking;
+    }
 
-        public void charge (Booking booking){
-            booking.setPrice(booking.getNumSpots() * tourDatabase.getTourById(tourID).getPricePerPerson());
-        }
+    public void charge(Booking booking){
+        booking.setPrice(booking.getNumSpots() * tourDatabase.getTourById(booking.getTourID()).getPricePerPerson());
+    }
 
-        // Þetta ætti að virka þegar við notum arraylist í staðinn fyrir array
-        public void cancel (Booking booking){
-            bookings.remove(booking);
-        }
+    // Þetta ætti að virka þegar við notum arraylist í staðinn fyrir array
+    public void cancel(Booking booking){
+        bookings.remove(booking);
+    }
     /*
     public void cancel(Booking booking) { 
         if (bookings != null && booking != null) {
@@ -53,7 +54,7 @@ public class BookingController {
 
         //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots
         //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
-        public boolean confirmBooking (Booking booking){
+        public boolean confirmBooking(Booking booking){
             if (booking == null || !isValidBooking(booking)) {
                 System.out.println("Invalid booking.");
                 return false;
