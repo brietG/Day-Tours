@@ -7,11 +7,15 @@ import java.util.List;
 public class TourDatabase {
     private static final String SELECT_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ? AND availableSpace > 0";
     private static final String DECREMENT_AVAILABLE_SPACE_QUERY = "UPDATE Tours SET availableSpace = availableSpace - ? WHERE tourID = ?";
+     private Database db;
 
+    public TourDatabase() {
+        db = new Database(); // Initialize the Database instance
+    }
     public Tour[] searchTours(String query) {
         String SEARCH_QUERY = "SELECT * FROM tours WHERE type LIKE ? OR location LIKE ? OR DATE_FORMAT(date, '%Y-%m-%d') LIKE ?";
     
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement(SEARCH_QUERY)) {
     
             stmt.setString(1, "%" + query + "%");
@@ -28,7 +32,7 @@ public class TourDatabase {
     }
 
     public Tour[] selectTourByType(String type) {
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement(SELECT_BY_TYPE_QUERY)) {
             stmt.setString(1, type);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -59,7 +63,7 @@ public class TourDatabase {
     }
 
     public void decrementAvailableSpace(int tourID, int numSpots) {
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement(DECREMENT_AVAILABLE_SPACE_QUERY)) {
             stmt.setInt(1, numSpots);
             stmt.setInt(2, tourID);
@@ -72,7 +76,7 @@ public class TourDatabase {
     
 
     public void addTour(Tour tour) {
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Tours (name, location, pricePerPerson, type, tourDate, tourTime, limitSpots, spaceAvailable) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             stmt.setString(1, tour.getName());
             stmt.setString(2, tour.getLocation());
@@ -105,7 +109,7 @@ public class TourDatabase {
     public Tour getTourByDetails(String detail) {
         String GET_TOUR_QUERY = "SELECT * FROM tours WHERE id = ? OR location = ? OR name = ? OR type = ? OR date = ?";
 
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement(GET_TOUR_QUERY)) {
 
             stmt.setString(1, detail);
@@ -128,9 +132,8 @@ public class TourDatabase {
     }
 
     public List<Tour> getAllTours() {
-        String GET_ALL_TOURS_QUERY = "SELECT * FROM tours";
-    
-        try (Connection conn = Database.getConnection();
+        String GET_ALL_TOURS_QUERY = "SELECT * FROM Tours";
+        try (Connection conn = db.getConnection();
             PreparedStatement stmt = conn.prepareStatement(GET_ALL_TOURS_QUERY);
             ResultSet rs = stmt.executeQuery()) {
     
@@ -147,7 +150,7 @@ public class TourDatabase {
 
     public Tour getTourById(int tourID) {
         String query = "SELECT * FROM Tours WHERE tourID = ?";
-        try (Connection conn = Database.getConnection();  // Assuming Database.getConnection() is a method to fetch a DB connection
+        try (Connection conn = db.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, tourID);

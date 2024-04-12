@@ -20,6 +20,8 @@ public class Booking {
     private TourDatabase tourDatabase;
     private TourController tourController;
 
+    private Database db;
+
     public Booking(Customer customer, Tour tour, Date bookingDate, Time bookingTime, int numSpots) {
         this.bookingID = ID_GENERATOR.getAndIncrement();
         this.customer = customer;
@@ -107,7 +109,7 @@ public class Booking {
     public void bookTour() {
         Connection conn = null;
         try {
-            conn = Database.getConnection();
+            conn = db.getConnection();
             bookingDatabase.addBookingToDatabase(this);
             tourController.decrementAvailableSpots(this);
             conn.commit();

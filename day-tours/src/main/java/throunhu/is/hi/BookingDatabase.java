@@ -7,9 +7,10 @@ import throunhu.is.hi.TourController;
 
 public class BookingDatabase {
 
+    private Database db;
     public void addBookingToDatabase(Booking booking) throws SQLException {
         String insertSQL = "INSERT INTO Bookings (customerID, tourID, bookingDate, bookingTime, numSpots, price) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             pstmt.setInt(1, booking.getCustomer().getKennitala());
             pstmt.setInt(2, booking.getTour().getTourID());
@@ -25,7 +26,7 @@ public class BookingDatabase {
     }
     public void removeBooking(int bookingID) throws SQLException {
         String removeSQL = "DELETE FROM Bookings WHERE bookingID = ?";
-        try (Connection conn = Database.getConnection();
+        try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(removeSQL)) {
             pstmt.setInt(1, bookingID);
             int affectedRows = pstmt.executeUpdate();

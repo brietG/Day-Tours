@@ -29,7 +29,7 @@ public class TourController {
         }
     }
 
-    public List<Tour> getAllTours() {
+    public List<Tour> seeAllTours() {
         return tourDatabase.getAllTours();
     }
 

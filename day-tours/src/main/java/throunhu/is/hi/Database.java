@@ -3,7 +3,7 @@ import java.sql.*;
 
 
 public class Database {
-
+    /*
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc://localhost/DayTours";
     static final String USER = "hopur4";
@@ -18,7 +18,26 @@ public class Database {
         } catch (ClassNotFoundException e) {
             throw new SQLException("MySQL driver not found", e);
         }
+    }*/
+
+    public Connection conn;
+
+    public Connection getConnection() {
+        String url = "jdbc:sqlite:daytrip.db";
+        try {
+            if (conn == null || conn.isClosed()) {
+                //Class.forName("org.sqlite.JDBC");
+                conn = DriverManager.getConnection(url);
+                System.out.println("Connection to SQLite has been established.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Cannot connect to the database: " + e.getMessage());
+            // It's often a good idea to re-throw the exception to allow higher-level methods to handle it appropriately.
+            throw new RuntimeException("Cannot connect to the database", e);
+        }
+        return conn;
     }
+
 
 }
 

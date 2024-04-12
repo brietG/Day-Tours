@@ -42,7 +42,7 @@ public class Main {
                 }
                 break; // Exit after processing
             } else if (input.equalsIgnoreCase("all")) {
-                List<Tour> tours = tourController.getAllTours();
+                List<Tour> tours = tourController.seeAllTours();
                 if (tours.isEmpty()) {
                     System.out.println("No tours available.");
                 } else {
@@ -58,4 +58,5 @@ public class Main {
         scanner.close();
 
     }
+
 }
