@@ -113,6 +113,10 @@ public class Tour {
         this.limitSpots = limitSpots;
     }
 
+    public Tour getTour(){
+        return this;
+    }
+
 
     // Method / Aðferð
     public void getInfo() {

@@ -37,7 +37,7 @@ public class TourController {
     //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
     public void decrementAvailableSpots(Booking booking) {
         if (tourDatabase != null) {
-            tourDatabase.decrementAvailableSpace(booking.getTour().getTourID(), booking.getNumSpots());
+            tourDatabase.decrementAvailableSpace(booking.getTourID(), booking.getNumSpots());
         }
     }
 
