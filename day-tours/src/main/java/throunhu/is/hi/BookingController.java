@@ -1,38 +1,53 @@
 package throunhu.is.hi;
 import throunhu.is.hi.Booking;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.Time;
+
 
 public class BookingController {
-    
+    private BookingDatabase bookingDatabase;
+    private TourDatabase tourDatabase;
 
     private Booking[] bookings;
-
-    public void change(Booking booking) { 
-
+    public BookingController(BookingDatabase bookingDatabase, TourDatabase tourDatabase){
+        this.bookingDatabase = bookingDatabase;
+        this.tourDatabase = tourDatabase;
     }
-    public void cancel(Booking booking) { 
+
+    public void charge(Booking booking) {
+        booking.setPrice(booking.getNumSpots()* booking.getTour().getPricePerPerson());
+    }
+
+    public void cancel(Booking booking) {
 
     }
 
     // tekur inn allar upplýsingar sem þarf til að búa til booking
-    public Booking[] createBooking() { 
-
-        return null;
-
+    public Booking createBooking(Customer customer, Tour tour, Date bookingDate, Time bookingTime, int numSpots) {
+        Booking booking = new Booking(customer,tour,bookingDate,bookingTime,numSpots);
+        charge(booking);
+        return booking;
     }
-    
-    public void addBooking() { 
 
-    }
+
     //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
     //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
-    public void confirmBooking(Booking booking) {
-        if (isValidBooking(booking)) {
-            booking.decrementAvailableSpots(); // Decrement available spots
-            booking.bookTour();
-        } else {
+    public boolean confirmBooking(Booking booking) {
+        if (booking == null || !isValidBooking(booking)) {
             System.out.println("Invalid booking.");
+            return false;
         }
+        try {
+            booking.bookTour();
+            System.out.println("Booking confirmed and spots updated.");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Booking confirmation failed: " + e.getMessage());
+            return false;
+        }
+
     }
 
     // Bætti við útaf junit test TODO - laga inní method
@@ -46,7 +61,7 @@ public class BookingController {
             return false;
         }
 
-        Tour tour = booking.getTourDatabase().getTourByDetails(String.valueOf(booking.getTourID()));
+        Tour tour = booking.getTourDatabase().getTourByDetails(String.valueOf(booking.getTour().getTourID()));
         if (tour == null) {
             System.out.println("Tour not found.");
             return false;
@@ -61,15 +76,6 @@ public class BookingController {
         // Dagsetning í fortíðinni valin ?
         
     }
-
-    public void processBooking(Booking booking) {
-        if (isValidBooking(booking)) {
-            booking.bookTour();
-        } else {
-            System.out.println("Invalid booking.");
-        }
-    }
-
 
 
 }

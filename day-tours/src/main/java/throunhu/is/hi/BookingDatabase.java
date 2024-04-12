@@ -3,6 +3,7 @@ package throunhu.is.hi;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import throunhu.is.hi.TourController;
 
 public class BookingDatabase {
 
@@ -11,17 +12,15 @@ public class BookingDatabase {
         try (Connection conn = Database.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             pstmt.setInt(1, booking.getCustomer().getKennitala());
-            pstmt.setInt(2, booking.getTourID());
+            pstmt.setInt(2, booking.getTour().getTourID());
             pstmt.setDate(3, booking.getBookingDate());
             pstmt.setTime(4, booking.getBookingTime());
             pstmt.setInt(5, booking.getNumSpots());
             pstmt.setInt(6, booking.getPrice());
             pstmt.executeUpdate();
-
             System.out.println("Booking successful");
         } catch (SQLException e) {
             System.out.println("Failed to add booking: " + e.getMessage());
-            throw e; // Rethrow to allow caller to handle
         }
     }
     public void removeBooking(int bookingID) throws SQLException {
@@ -42,7 +41,6 @@ public class BookingDatabase {
             System.out.println("Error removing booking: " + e.getMessage());
         }
     }
-
 
 
     public void update (Booking booking){

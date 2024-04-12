@@ -13,58 +13,49 @@ import throunhu.is.hi.Tour;
 
 public class Main {
     public static void main(String[] args) {
-        TourController tourController = new TourController();
-        BookingController bookingController = new BookingController();
+        // Initialize controllers and databases
+        TourDatabase tourDatabase = new TourDatabase();
+        BookingDatabase bookingDatabase = new BookingDatabase();
+        TourController tourController = new TourController(tourDatabase);
+        BookingController bookingController = new BookingController(bookingDatabase,tourDatabase);
+
+        // Scanner for input
         Scanner scanner = new Scanner(System.in);
 
+        // Sample customer data
+        Customer customer = new Customer(2020202, "Jóna", "email@ja.is", 121212);
+
+        // Main interaction loop
         System.out.println("Welcome! Do you want to 'search' a trip or get 'all' trips?");
-        String input = scanner.nextLine();
-        
-        if (input.equalsIgnoreCase("search")) {
-            System.out.println("Enter your search query:");
-            String query = scanner.nextLine();
-            Tour[] tours = tourController.searchTours(query);
-            for (Tour tour : tours) {
-                tour.getInfo();
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("search")) {
+                System.out.println("Enter your search query:");
+                String query = scanner.nextLine();
+                Tour[] tours = tourController.searchTours(query);
+                if (tours.length > 0) {
+                    for (Tour tour : tours) {
+                        tour.getInfo();
+                    }
+                } else {
+                    System.out.println("No tours found with the given query.");
+                }
+                break; // Exit after processing
+            } else if (input.equalsIgnoreCase("all")) {
+                List<Tour> tours = tourController.getAllTours();
+                if (tours.isEmpty()) {
+                    System.out.println("No tours available.");
+                } else {
+                    for (Tour tour : tours) {
+                        tour.getInfo();
+                    }
+                }
+                break; // Exit after processing
+            } else {
+                System.out.println("Invalid input. Please enter 'search' or 'all'.");
             }
-        } else if (input.equalsIgnoreCase("all")) {
-            List<Tour> tours = tourController.getAllTours();
-            for (Tour tour : tours) {
-                tour.getInfo();
-            }
-        } else {
-            System.out.println("Invalid input. Please enter 'search' or 'all'.");
         }
+        scanner.close();
 
-
-
-/* 
-        List<Tour> allTours = tourController.getAllTours();
-        for (Tour tour : allTours) {
-            tour.getInfo();
-        }
-
-        Tour[] tours = tourController.searchTours("Horse");
-        for (Tour tour : tours) {
-            tour.getInfo();
-        }
-    
-*/
-        /* 
-        BookingDatabase bookingDatabase = new BookingDatabase();
-        Customer customer = new Customer(1020202, "John Doe","joi@dd", 33333); // Assuming a Customer constructor
-
-        Booking booking = new Booking(1, customer, 4, LocalDate.now(), LocalTime.now(), 2, 200, bookingDatabase);
-
-        try {
-            // Adding a booking
-            bookingDatabase.addBookingToDatabase(booking);
-            // Optionally, remove a booking
-            // bookingDatabase.removeBooking(1); // Assuming the booking ID is 1
-        } catch (SQLException e) {
-            System.out.println("Database operation failed: " + e.getMessage());
-        }
-    }*/
-}
-
+    }
 }

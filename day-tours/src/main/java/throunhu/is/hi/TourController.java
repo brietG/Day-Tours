@@ -6,7 +6,11 @@ import java.util.List;
 import throunhu.is.hi.Tour;
 
 public class TourController {
-    private TourDatabase tourDatabase = new TourDatabase();
+    private TourDatabase tourDatabase;
+
+    public TourController(TourDatabase tourDatabase) {
+        this.tourDatabase = tourDatabase;
+    }
 
     public void addTour(Tour tour) {
         tourDatabase.addTour(tour);
@@ -27,6 +31,14 @@ public class TourController {
 
     public List<Tour> getAllTours() {
         return tourDatabase.getAllTours();
+    }
+
+    //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots
+    //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
+    public void decrementAvailableSpots(Booking booking) {
+        if (tourDatabase != null) {
+            tourDatabase.decrementAvailableSpace(booking.getTour().getTourID(), booking.getNumSpots());
+        }
     }
 
 }

@@ -1,29 +1,33 @@
 package throunhu.is.hi;
 
+import java.nio.channels.CancelledKeyException;
 import java.sql.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Booking {
+
+    private static final AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
     private int bookingID;
     private Customer customer;
-    private int tourID;
+    private Tour tour;
+    //private int tourID;
     private Date bookingDate;
     private Time bookingTime;
     private int numSpots;
     private int price;
     private BookingDatabase bookingDatabase;
     private TourDatabase tourDatabase;
+    private TourController tourController;
 
-    public Booking(int bookingID, Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots, int price, BookingDatabase bookingDatabase, TourDatabase tourDatabase) {
-        this.bookingID = bookingID;
+    public Booking(Customer customer, Tour tour, Date bookingDate, Time bookingTime, int numSpots) {
+        this.bookingID = ID_GENERATOR.getAndIncrement();
         this.customer = customer;
-        this.tourID = tourID;
+        //this.tourID = tourID;
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
         this.numSpots = numSpots;
-        this.price = price;
-        this.bookingDatabase = bookingDatabase;
-        this.tourDatabase = tourDatabase;
+        this.tour = tour;
     }
 
     public int getBookingID() {
@@ -42,13 +46,13 @@ public class Booking {
         this.customer = customer;
     }
 
-    public int getTourID() {
+   /*public int getTourID() {
         return tourID;
     }
 
     public void setTourID(int tourID) {
         this.tourID = tourID;
-    }
+    }*/
 
     public Date getBookingDate() {
         return bookingDate;
@@ -90,23 +94,29 @@ public class Booking {
         return tourDatabase;
     }
 
+   public Tour getTour(){
+        return tour;
+   }
+    //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
+    //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
+
+    public int addSpot() {
+        return numSpots++;
+    }
 
     public void bookTour() {
+        Connection conn = null;
         try {
+            conn = Database.getConnection();
             bookingDatabase.addBookingToDatabase(this);
+            tourController.decrementAvailableSpots(this);
+            conn.commit();
             System.out.println("Booking successful.");
         } catch (Exception e) {
             System.out.println("Booking failed: " + e.getMessage());
         }
     }
-    //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots 
-    //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
-    public void decrementAvailableSpots() {
-        TourDatabase tourDatabase = this.getTourDatabase();
-        if (tourDatabase != null) {
-            tourDatabase.decrementAvailableSpace(this.getTourID(), this.getNumSpots());
-        }
-    }
+
 
 
 }

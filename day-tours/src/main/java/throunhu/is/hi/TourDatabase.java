@@ -58,10 +58,10 @@ public class TourDatabase {
         return tours.toArray(new Tour[0]);
     }
 
-    public void decrementAvailableSpace(int tourID, int numSpotsBooked) {
+    public void decrementAvailableSpace(int tourID, int numSpots) {
         try (Connection conn = Database.getConnection();
             PreparedStatement stmt = conn.prepareStatement(DECREMENT_AVAILABLE_SPACE_QUERY)) {
-            stmt.setInt(1, numSpotsBooked);
+            stmt.setInt(1, numSpots);
             stmt.setInt(2, tourID);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -144,4 +144,23 @@ public class TourDatabase {
             return null;
         }
     }
+
+    public Tour getTourById(int tourID) {
+        String query = "SELECT * FROM Tours WHERE tourID = ?";
+        try (Connection conn = Database.getConnection();  // Assuming Database.getConnection() is a method to fetch a DB connection
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, tourID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return extractTourFromResultSet(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching tour: " + e.getMessage());
+            return null;
+        }
+        return null;
+    }
+
 }
