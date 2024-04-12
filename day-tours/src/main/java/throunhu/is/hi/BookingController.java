@@ -97,17 +97,5 @@ public class BookingController {
         // Dagsetning í fortíðinni valin ?
         
     }
-
-    /* 
-    public void processBooking(Booking booking) {
-        if (isValidBooking(booking)) {
-            booking.bookTour();
-        } else {
-            System.out.println("Invalid booking.");
-        }
-    }
-    */
-
-    // public void addBooking() { } - processBooking nóg?
-    // public void change(Booking booking) { }
+    
 }
