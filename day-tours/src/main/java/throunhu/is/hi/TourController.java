@@ -16,18 +16,18 @@ public class TourController {
         tourDatabase.addTour(tour);
     }
 
-    public Tour[] searchTours(String query) {
+    public List<Tour> searchTours(String query) {
         return tourDatabase.searchTours(query);
     }
-
+    /*
     public void printTourInfo(int id) {
-        Tour tour = tourDatabase.getTourByDetails(String.valueOf(id)); // Use the tour ID as detail
-        if (tour != null) {
+        List<Tour> tours = tourDatabase.getTourById(id); // Use the tour ID as detail
+        if (tours != null) {
             tour.getInfo();
         } else {
             System.out.println("Tour not found");
         }
-    }
+    }*/
 
     public List<Tour> seeAllTours() {
         return tourDatabase.getAllTours();

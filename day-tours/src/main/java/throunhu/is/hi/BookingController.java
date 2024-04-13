@@ -10,12 +10,12 @@ public class BookingController {
     private BookingDatabase bookingDatabase;
     private TourDatabase tourDatabase;
     // private Booking[] bookings;
-    private List<Booking> bookings;
+   //private List<Booking> bookings;
 
     public BookingController(BookingDatabase bookingDatabase, TourDatabase tourDatabase) {
         this.bookingDatabase = bookingDatabase;
         this.tourDatabase = tourDatabase;
-        this.bookings = new ArrayList<>();
+       // this.bookings = new ArrayList<>();
     }
 
 
@@ -31,9 +31,12 @@ public class BookingController {
     }
 
     // Þetta ætti að virka þegar við notum arraylist í staðinn fyrir array
+    /*
+
+
     public void cancel(Booking booking){
         bookings.remove(booking);
-    }
+    }*/
     /*
     public void cancel(Booking booking) { 
         if (bookings != null && booking != null) {
@@ -99,6 +102,6 @@ public class BookingController {
         }
 
 
-    }
-}
+    };
+
 
