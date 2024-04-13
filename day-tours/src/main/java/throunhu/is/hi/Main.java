@@ -1,14 +1,14 @@
 package throunhu.is.hi;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+//import java.time.LocalDate;
+//import java.time.LocalTime;
 import java.util.List;
 import java.util.Scanner;
 
-import throunhu.is.hi.TourController;
-import throunhu.is.hi.BookingController;
-import throunhu.is.hi.Tour;
+//import throunhu.is.hi.TourController;
+//import throunhu.is.hi.BookingController;
+//import throunhu.is.hi.Tour;
 
 
 public class Main {
@@ -23,7 +23,6 @@ public class Main {
         // Scanner for input
         Scanner scanner = new Scanner(System.in);
 
-        // Sample customer data
         Customer customer = new Customer(2020202, "Jóna", "email@ja.is", 121212);
 
         Connection con = null;
@@ -33,28 +32,36 @@ public class Main {
         System.out.println("Welcome! Do you want to 'search' a trip or get 'all' trips?");
 
         while (true) {
-            String input = scanner.nextLine();
-            if (input.equalsIgnoreCase("search")) {
-                System.out.println("Enter your search query:");
-                String query = scanner.nextLine();
-                List<Tour> tours = tourController.searchTours(query);
-                if (tours.size() > 0) {
-                    for (Tour tour : tours) {
-                        tour.getInfo();
-                    }
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("search")) {
+                System.out.println("Choose '1' if you want to search by any one attribute or choose '2' to search by location and date");
+                System.out.println("Enter number:");
+                String num = scanner.nextLine().trim();
+                if (num.equals("1")) {
+                    System.out.println("Enter your search query for type, name, date, or location:");
+                    String query = scanner.nextLine();
+                    // Assuming a method exists to handle single attribute searches
+                    List<Tour> tours = tourDatabase.searchTours(query);
+                    displayTours(tours);
+                } else if (num.equals("2")) {
+                    System.out.println("Enter the location:");
+                    String location = scanner.nextLine();
+                    System.out.println("Enter the date (YYYY-MM-DD):");
+                    String date = scanner.nextLine();
+                    // Assuming a method exists to handle searches by location and date
+                    List<Tour> tours = tourDatabase.searchTourbyDateandLoc(location, date);
+                    displayTours(tours);
                 } else {
-                    System.out.println("No tours found with the given query.");
+                    System.out.println("Invalid selection. Please enter '1' or '2'.");
+                    continue;
                 }
                 break; // Exit after processing
-            } else if (input.equalsIgnoreCase("all")) {
-                //List<Tour> tours = tourController.seeAllTours();
+            } else if (input.equals("all")) {
                 List<Tour> tours = tourDatabase.getAllTours();
                 if (tours.isEmpty()) {
                     System.out.println("No tours available.");
                 } else {
-                    for (Tour tour : tours) {
-                        tour.getInfo();
-                    }
+                    displayTours(tours);
                 }
                 break; // Exit after processing
             } else {
@@ -62,8 +69,16 @@ public class Main {
             }
         }
         scanner.close();
+    }
 
-
+    private static void displayTours(List<Tour> tours) {
+        if (tours.isEmpty()) {
+            System.out.println("No tours found with the given query.");
+        } else {
+            for (Tour tour : tours) {
+                tour.getInfo();
+            }
+        }
     }
 
 }
