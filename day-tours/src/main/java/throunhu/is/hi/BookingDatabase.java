@@ -42,9 +42,4 @@ public class BookingDatabase {
             System.out.println("Error removing booking: " + e.getMessage());
         }
     }
-
-
-    public void update (Booking booking){
-
-    }
 }

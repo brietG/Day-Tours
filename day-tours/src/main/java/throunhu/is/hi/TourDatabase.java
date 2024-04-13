@@ -12,11 +12,11 @@ import java.time.format.DateTimeFormatter;
 public class TourDatabase{
     private static final String SELECT_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ? AND availableSpace > 0";
     private static final String DECREMENT_AVAILABLE_SPACE_QUERY = "UPDATE Tours SET availableSpace = availableSpace - ? WHERE tourID = ?";
-     private Database db;
+    private final Database db;
 
     public TourDatabase(Database db) {
         this.db = db;
-        }
+    }
 
     public List<Tour> searchTours(String query) {
         String SEARCH_QUERY = "SELECT * FROM Tours WHERE type LIKE ? OR location LIKE ? OR strftime('%Y-%m-%d', tourDate) LIKE ?";
