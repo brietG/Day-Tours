@@ -10,43 +10,50 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class TourDatabase{
-    private static final String SELECT_BY_TYPE_QUERY = "SELECT * FROM Tours WHERE type = ? AND availableSpace > 0";
     private static final String DECREMENT_AVAILABLE_SPACE_QUERY = "UPDATE Tours SET availableSpace = availableSpace - ? WHERE tourID = ?";
      private Database db;
 
     public TourDatabase(Database db) {
         this.db = db;
-        }
+    }
 
     public List<Tour> searchTours(String query) {
-        String SEARCH_QUERY = "SELECT * FROM Tours WHERE type LIKE ? OR location LIKE ? OR strftime('%Y-%m-%d', tourDate) LIKE ?";
+        String SEARCH_QUERY = "SELECT * FROM Tours WHERE type LIKE ? OR name LIKE  ? OR location LIKE ? OR strftime('%Y-%m-%d', tourDate) = ? AND spaceAvailable > 0";
+        List<Tour> tours = new ArrayList<>();
+
         try (Connection conn = db.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(SEARCH_QUERY)) {
-    
+             PreparedStatement stmt = conn.prepareStatement(SEARCH_QUERY)) {
+
             stmt.setString(1, "%" + query + "%");
             stmt.setString(2, "%" + query + "%");
             stmt.setString(3, "%" + query + "%");
-    
+            stmt.setString(4, query); // For exact date match or use a date format that is appropriate
+
             try (ResultSet rs = stmt.executeQuery()) {
-                return extractToursFromResultSet(rs);
+                tours = extractToursFromResultSet(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+        return tours;
     }
 
-    public List<Tour> selectTourByType(String type) {
+    public List<Tour> searchTourbyDateandLoc(String location, String date){
+        String SEARCH_QUERY = "SELECT * FROM Tours WHERE location LIKE ? AND strftime('%Y-%m-%d', tourDate) = ? AND spaceAvailable > 0";
+        List<Tour> tours = new ArrayList<>();
+
         try (Connection conn = db.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(SELECT_BY_TYPE_QUERY)) {
-            stmt.setString(1, type);
+             PreparedStatement stmt = conn.prepareStatement(SEARCH_QUERY)) {
+            stmt.setString(1, "%" + location + "%");
+            stmt.setString(2, date);
+
             try (ResultSet rs = stmt.executeQuery()) {
-                return extractToursFromResultSet(rs);
+                tours = extractToursFromResultSet(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+        return tours;
     }
 
     private Tour extractTourFromResultSet(ResultSet rs) throws SQLException {
@@ -151,27 +158,6 @@ public class TourDatabase{
         }
     }
 
-    public List<Tour> getTourByDetails(String detail) {
-        String GET_TOUR_QUERY = "SELECT * FROM tours WHERE location = ? OR name = ? OR type = ? OR date = ?";
-        try (Connection conn = db.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(GET_TOUR_QUERY)) {
-            stmt.setString(1, detail);
-            stmt.setString(2, detail);
-            stmt.setString(3, detail);
-            stmt.setString(4, detail);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return extractToursFromResultSet(rs);
-                } else {
-                    return null;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 private static final Logger logger = Logger.getLogger(TourDatabase.class.getName());
     public List<Tour> getAllTours() {

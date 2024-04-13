@@ -16,9 +16,12 @@ public class TourController {
         tourDatabase.addTour(tour);
     }
 
+    // Þurfum við að hafa svona fyrir aðferðirnar í tourdatabase?
     public List<Tour> searchTours(String query) {
         return tourDatabase.searchTours(query);
     }
+
+
     /*
     public void printTourInfo(int id) {
         List<Tour> tours = tourDatabase.getTourById(id); // Use the tour ID as detail
