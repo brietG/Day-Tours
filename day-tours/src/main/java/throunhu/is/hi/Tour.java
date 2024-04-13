@@ -1,6 +1,8 @@
 package throunhu.is.hi;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Tour {
     private int tourID;
@@ -9,13 +11,13 @@ public class Tour {
     private String location;
     private int pricePerPerson;
     // private double duration;
-    private Date tourDate;
-    private Time tourTime;
+    private LocalDate tourDate;
+    private LocalTime tourTime;
     private int limitSpots;
     private boolean spaceAvailable;
 
     // Constructor
-    public Tour(int tourID, String name, String location, int pricePerPerson, String type, Date tourDate, Time tourTime, int limitSpots, boolean spaceAvailable) {
+    public Tour(int tourID, String name, String location, int pricePerPerson, String type, LocalDate tourDate, LocalTime tourTime, int limitSpots, boolean spaceAvailable) {
         this.tourID = tourID;
         this.name = name;
         this.location = location;
@@ -51,11 +53,11 @@ public class Tour {
         return type;
     }
 
-    public Date getTourDate() {
+    public LocalDate getTourDate() {
         return tourDate;
     }
 
-    public Time getTourTime() {
+    public LocalTime getTourTime() {
         return tourTime;
     }
 
@@ -85,11 +87,11 @@ public class Tour {
         this.type = type;
     }
 
-    public void setTourDate(Date tourDate) {
+    public void setTourDate(LocalDate tourDate) {
         this.tourDate = tourDate;
     }
 
-    public void setTourTime(Time tourTime) {
+    public void setTourTime(LocalTime tourTime) {
         this.tourTime = tourTime;
     }
 
