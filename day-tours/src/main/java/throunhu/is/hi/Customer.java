@@ -1,6 +1,5 @@
 package throunhu.is.hi;
 
-import throunhu.is.hi.Booking;
 
 
 public class Customer {
@@ -56,7 +55,8 @@ public class Customer {
     }
 
     public Booking[] getBookings(){
-        // AI sagði mér að gera þetta veit ekki afhverju 
+        // AI sagði mér að gera þetta veit ekki afhverju
         return null; // Placeholder, replace with actual logic
     }
+
 }

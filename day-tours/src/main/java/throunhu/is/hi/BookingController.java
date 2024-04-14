@@ -53,7 +53,7 @@ public class BookingController {
         }
     }
     */
-
+/*
 
         //á að tengjast við decrement í tourDatabase og kalla á hann til að minnka sæti í limitspots
         //svo fjöldi limitspots minnki um fjölda sæta sem bókuð eru
@@ -99,7 +99,9 @@ public class BookingController {
             return true;
             // Dagsetning í fortíðinni valin ?
 
-        }
+        }*/
+
+
 
 
     };

@@ -6,9 +6,6 @@ import java.sql.*;
 import java.util.List;
 import java.util.Scanner;
 
-//import throunhu.is.hi.TourController;
-//import throunhu.is.hi.BookingController;
-//import throunhu.is.hi.Tour;
 
 
 public class Main {
@@ -16,6 +13,7 @@ public class Main {
         // Initialize controllers and databases
         Database db = new Database();
         TourDatabase tourDatabase = new TourDatabase(db);
+        CustomerDB customerDB = new CustomerDB();
         BookingDatabase bookingDatabase = new BookingDatabase();
         TourController tourController = new TourController(tourDatabase);
         BookingController bookingController = new BookingController(bookingDatabase,tourDatabase);
@@ -23,12 +21,14 @@ public class Main {
         // Scanner for input
         Scanner scanner = new Scanner(System.in);
 
-        Customer customer = new Customer(2020202, "Jóna", "email@ja.is", 121212);
+        //Customer customer = new Customer(2020202, "Jóna", "email@ja.is", 121212);
 
-        Connection con = null;
+        Connection conn = null;
         PreparedStatement p = null;
         ResultSet rs = null;
         // Main interaction loop
+
+
         System.out.println("Welcome! Do you want to 'search' a trip or get 'all' trips?");
 
         while (true) {
@@ -67,7 +67,34 @@ public class Main {
             } else {
                 System.out.println("Invalid input. Please enter 'search' or 'all'.");
             }
+
+            }
+        System.out.println("Do you want to book a tour? (yes/no)");
+        String input = scanner.nextLine().toLowerCase().trim();
+        if (input.equals("yes")) {
+
+            // Gather customer information
+
+            System.out.println("Enter your details:");
+            System.out.println("Kennitala:");
+            int kennitala = Integer.parseInt(scanner.nextLine());
+            System.out.println("Name:");
+            String name = scanner.nextLine();
+            System.out.println("Email:");
+            String email = scanner.nextLine();
+            System.out.println("Phone:");
+            int phone = Integer.parseInt(scanner.nextLine());
+
+            // Create customer object
+            Customer customer = new Customer(kennitala, name, email, phone);
+
+            // Add customer to database
+            customerDB.addCustomer(customer);
         }
+
+
+
+        // Close scanner
         scanner.close();
     }
 
@@ -80,5 +107,6 @@ public class Main {
             }
         }
     }
+
 
 }

@@ -100,7 +100,7 @@ public class Booking {
     public int addSpot() {
         return numSpots++;
     }
-
+/*
     public void bookTour() {
         Connection conn = null;
         try {
@@ -112,8 +112,7 @@ public class Booking {
         } catch (Exception e) {
             System.out.println("Booking failed: " + e.getMessage());
         }
-    }
-
+    }*/
 
 
 }
