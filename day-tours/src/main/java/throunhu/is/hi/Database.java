@@ -13,6 +13,7 @@ public class Database {
             throw new RuntimeException("Database file not found");
         }
         String url = "jdbc:sqlite:" + res.getPath();
+        url.replace("%20", " ");
         Connection conn = null;
 
         try {
