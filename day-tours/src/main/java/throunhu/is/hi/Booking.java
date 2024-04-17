@@ -2,6 +2,10 @@ package throunhu.is.hi;
 
 //import java.nio.channels.CancelledKeyException;
 import java.sql.*;
+import java.sql.Date;
+import java.util.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -19,16 +23,18 @@ public class Booking {
     private TourDatabase tourDatabase;
     private TourController tourController;
     private Database db;
+    private CustomerDB customerDB;
 
-    public Booking(Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots,int price) {
+    public Booking(Customer customer, int tourID, Date bookingDate, Time bookingTime, int numSpots, int price) {
         this.bookingID = ID_GENERATOR.getAndIncrement();
         this.customer = customer;
         this.tourID = tourID;
-        this.bookingDate = bookingDate;
-        this.bookingTime = bookingTime;
+        this.bookingDate = Date.valueOf(bookingDate.toLocalDate());
+        this.bookingTime = Time.valueOf(bookingTime.toLocalTime());
         this.numSpots = numSpots;
         this.price = price;
     }
+
 
     public int getBookingID() {
         return bookingID;
@@ -46,7 +52,7 @@ public class Booking {
         this.customer = customer;
     }
 
-   public int getTourID() {
+    public int getTourID() {
         return tourID;
     }
 
@@ -100,19 +106,28 @@ public class Booking {
     public int addSpot() {
         return numSpots++;
     }
-/*
-    public void bookTour() {
-        Connection conn = null;
-        try {
-            conn = db.getConnection();
-            bookingDatabase.addBookingToDatabase(this);
-            tourController.decrementAvailableSpots(this);
-            conn.commit();
-            System.out.println("Booking successful.");
-        } catch (Exception e) {
-            System.out.println("Booking failed: " + e.getMessage());
-        }
-    }*/
+
+    public static Booking bookTour(BookingDatabase bookingDatabase, Customer customer) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the ID of the tour you would like to book:");
+        int tourID = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter the number of spots you want to book:");
+        int numSpots = Integer.parseInt(scanner.nextLine());
+
+        int pricePerPerson = bookingDatabase.getPricePerPerson(tourID);
+        // Calculate total price
+        int totalPrice = numSpots * pricePerPerson;
+
+        // Assuming bookingDate and bookingTime are available as instance variables
+        LocalDate localDate = LocalDate.now(); // Example current date
+        LocalTime localTime = LocalTime.now(); // Example current time
+
+        // Close scanner
+        scanner.close();
+
+        return new Booking(customer, tourID, Date.valueOf(localDate), Time.valueOf(localTime), numSpots, totalPrice);
+    }
 
 
 }

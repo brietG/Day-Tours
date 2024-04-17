@@ -73,7 +73,7 @@ public class Customer {
         System.out.println("Phone:");
         int phone = Integer.parseInt(scanner.nextLine());
 
-        scanner.close();
+
 
         return new Customer(kennitala, name, email, phone);
     }
