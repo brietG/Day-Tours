@@ -1,6 +1,7 @@
 package throunhu.is.hi;
 
 
+import java.util.Scanner;
 
 public class Customer {
     private int kennitala;
@@ -57,6 +58,24 @@ public class Customer {
     public Booking[] getBookings(){
         // AI sagði mér að gera þetta veit ekki afhverju
         return null; // Placeholder, replace with actual logic
+    }
+
+    public static Customer gatherCustomerInfo() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter your details:");
+        System.out.println("Kennitala:");
+        int kennitala = Integer.parseInt(scanner.nextLine());
+        System.out.println("Name:");
+        String name = scanner.nextLine();
+        System.out.println("Email:");
+        String email = scanner.nextLine();
+        System.out.println("Phone:");
+        int phone = Integer.parseInt(scanner.nextLine());
+
+        scanner.close();
+
+        return new Customer(kennitala, name, email, phone);
     }
 
 }

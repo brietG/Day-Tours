@@ -72,25 +72,13 @@ public class Main {
         System.out.println("Do you want to book a tour? (yes/no)");
         String input = scanner.nextLine().toLowerCase().trim();
         if (input.equals("yes")) {
-
-            // Gather customer information
-
-            System.out.println("Enter your details:");
-            System.out.println("Kennitala:");
-            int kennitala = Integer.parseInt(scanner.nextLine());
-            System.out.println("Name:");
-            String name = scanner.nextLine();
-            System.out.println("Email:");
-            String email = scanner.nextLine();
-            System.out.println("Phone:");
-            int phone = Integer.parseInt(scanner.nextLine());
-
-            // Create customer object
-            Customer customer = new Customer(kennitala, name, email, phone);
+            // Gather customer information using the static method
+            Customer customer = Customer.gatherCustomerInfo();
 
             // Add customer to database
             customerDB.addCustomer(customer);
         }
+
 
 
 
