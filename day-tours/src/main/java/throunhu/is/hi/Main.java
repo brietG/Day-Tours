@@ -74,9 +74,11 @@ public class Main {
         if (input.equals("yes")) {
             // Gather customer information using the static method
             Customer customer = Customer.gatherCustomerInfo();
+            Booking booking = Booking.bookTour(bookingDatabase, customer);
 
             // Add customer to database
             customerDB.addCustomer(customer);
+            bookingDatabase.addBooking(booking);
         }
 
 
